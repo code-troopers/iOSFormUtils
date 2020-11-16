@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		C8CF38E81DC9DC20002D11DF /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Form.swift; path = iOSFormUtils/Form.swift; sourceTree = "<group>"; };
+		7B6A47F1256271090025B242 /* iOSFormUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iOSFormUtils; path = iOSFormUtils/iOSFormUtils; sourceTree = "<group>"; };
 		C8CF38E91DC9DC20002D11DF /* FormInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormInput.swift; path = iOSFormUtils/FormInput.swift; sourceTree = "<group>"; };
 		C8CF38EA1DC9DC20002D11DF /* ValidatedFormInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ValidatedFormInput.swift; path = iOSFormUtils/ValidatedFormInput.swift; sourceTree = "<group>"; };
 		C8CF38EB1DC9DC94002D11DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C8F50C0F1CEF0A26006D8C51 /* ValidatedForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ValidatedForm.swift; path = iOSFormUtils/ValidatedForm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		C8714A461CECC5360006E038 = {
 			isa = PBXGroup;
 			children = (
+				7B6A47F1256271090025B242 /* iOSFormUtils */,
 				C8C6A7FB1CEDBDED00B9B9D8 /* iOSFormUtils */,
 			);
 			sourceTree = "<group>";
@@ -26,10 +26,8 @@
 			isa = PBXGroup;
 			children = (
 				C8CF38EB1DC9DC94002D11DF /* Info.plist */,
-				C8CF38E81DC9DC20002D11DF /* Form.swift */,
 				C8CF38E91DC9DC20002D11DF /* FormInput.swift */,
 				C8CF38EA1DC9DC20002D11DF /* ValidatedFormInput.swift */,
-				C8F50C0F1CEF0A26006D8C51 /* ValidatedForm.swift */,
 			);
 			name = iOSFormUtils;
 			sourceTree = "<group>";
@@ -47,6 +45,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = C8714A461CECC5360006E038;

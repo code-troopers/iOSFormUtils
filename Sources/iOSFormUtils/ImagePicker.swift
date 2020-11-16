@@ -72,7 +72,7 @@ public class ImagePicker: UIButton {
     }
   }
 
-  func selfTouched(_ sender: Any) {
+  @objc func selfTouched(_ sender: Any) {
     if let _ = dataSource {
       dataSource.controllerForDisplaying().present(actionSheet, animated: true)
     } else {
@@ -82,8 +82,8 @@ public class ImagePicker: UIButton {
 }
 
 extension ImagePicker: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-  public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-    if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+  public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
       if let _ = delegate {
         self.selectedImage = pickedImage
         delegate.imagePicker(self, selectedImage: pickedImage)

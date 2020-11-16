@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "iOSFormUtils"
-  s.version          = "0.4.3"
+  s.version          = "0.5.0"
   s.summary          = "iOSFormUtils helps you developping validated forms in iOS apps."
 
 # This description is used to generate tags and improve search results.
@@ -31,6 +31,6 @@ iOSFormUtils helps you developping validated forms in iOS apps. You could use it
 
   s.source_files = 'iOSFormUtils'
  
-  s.dependency 'SBPickerSelector', '~> 1.1.0' 
-  s.dependency 'UIKitExtensions', '~> 0.2.5'
+  s.dependency 'SBPickerSelector', '~> 2.0.6'
+  s.dependency 'UIKitExtensions', '~> 0.3.0'
 end

@@ -36,9 +36,11 @@ open class DateDropDown: DropDown {
 
   override open func loadView() {
     super.loadView()
-
-    picker.pickerType = .date
+    picker = SBPickerSwiftSelector(mode: .dateDefault)
+    /*
+ picker.pickerType = .date
     picker.onlyDayPicker = true
     picker.datePickerType = .onlyDay
+ */
   }
 }

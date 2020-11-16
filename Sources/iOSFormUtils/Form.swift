@@ -99,14 +99,14 @@ open class Form: UIScrollView {
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(Form.keyboardShown(_:)),
-      name: NSNotification.Name.UIKeyboardDidShow,
+        name: UIResponder.keyboardDidShowNotification,
       object: nil
     )
 
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(Form.keyboardHidden(_:)),
-      name: NSNotification.Name.UIKeyboardDidHide,
+        name: UIResponder.keyboardDidHideNotification,
       object: nil
     )
 
@@ -204,7 +204,7 @@ open class Form: UIScrollView {
    
    - Parameter notification: the received notification.
    */
-  func textFieldReturnedFired(_ notification: Notification) {
+    @objc func textFieldReturnedFired(_ notification: Notification) {
     if let textfield = notification.object as? TextInput {
       if isLastInput(textfield) {
         textfield.stopEditing()
@@ -225,7 +225,7 @@ open class Form: UIScrollView {
 
    - Parameter notification: the received notification.
    */
-  func textFieldResignedFirstResponderFired(_ notification: Notification) {
+    @objc func textFieldResignedFirstResponderFired(_ notification: Notification) {
     resetScrollingZone()
   }
   
@@ -234,9 +234,9 @@ open class Form: UIScrollView {
    
    - Parameter notification: the received notification
    */
-  func keyboardShown(_ notification: Notification) {
+    @objc func keyboardShown(_ notification: Notification) {
     let info  = (notification as NSNotification).userInfo!
-    let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]! as AnyObject
+    let value: AnyObject = info[UIResponder.keyboardFrameEndUserInfoKey]! as AnyObject
     
     let rawFrame = value.cgRectValue
     let keyboardFrame = self.convert(rawFrame!, from: nil)
@@ -248,7 +248,7 @@ open class Form: UIScrollView {
     }
   }
 
-  func keyboardHidden(_ notification: Notification) {
+    @objc func keyboardHidden(_ notification: Notification) {
     resetScrollingZone()
   }
   
@@ -257,7 +257,7 @@ open class Form: UIScrollView {
    
    - Parameter notification: the received notification
    */
-  func textFieldBecameFirstResponder(_ notification: Notification) {
+    @objc func textFieldBecameFirstResponder(_ notification: Notification) {
     if let textfield = notification.object as? TextInput {
       currentInput = textfield
     }

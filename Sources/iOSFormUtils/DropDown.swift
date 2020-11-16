@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SBPickerSelector
 import UIKit
 import UIKitExtensions
 import SnapKit
@@ -46,7 +45,7 @@ open class DropDown: OwnView {
   }
   public var dataSource: DropDownDataSource!
 
-  var picker: SBPickerSelector = SBPickerSelector.picker()
+  var picker: SBPickerSwiftSelector? //FIXME CG = SBPickerSwiftSelector.picker()
   var values: [String]!
   var currentTextField: TextInput!
   public var selectedIndex: Int!
@@ -63,7 +62,7 @@ open class DropDown: OwnView {
     self.addSubview(self.titleTextField)
     
     rightIcon = UIImageView(frame: CGRect())
-    rightIcon.contentMode = UIViewContentMode.center
+    rightIcon.contentMode = UIView.ContentMode.center
     self.addSubview(rightIcon)
     
     mainButton = UIButton(type: .custom)
@@ -88,12 +87,11 @@ open class DropDown: OwnView {
     self.layoutIfNeeded()
     self.layoutSubviews()
 
-    picker.delegate = self
-    picker.pickerType = SBPickerSelectorType.text
-    picker.doneButtonTitle = "OK"
-    picker.doneButton?.tintColor = mainColor
-    picker.cancelButtonTitle = "Annuler"
-    picker.cancelButton?.tintColor = mainColor
+    picker = SBPickerSwiftSelector(mode: .text)
+    picker?.doneButton?.title = "OK"
+    picker?.doneButton?.tintColor = mainColor
+    picker?.cancelButton?.title = "Annuler"
+    picker?.cancelButton?.tintColor = mainColor
 
     updateUI()
 
@@ -109,8 +107,8 @@ open class DropDown: OwnView {
 
   func updateUI() {
     if let _ = dataSource, let _ = uiDataSource {
-      picker.doneButton?.tintColor = uiDataSource.getButtonsColor()
-      picker.cancelButton?.tintColor = uiDataSource.getButtonsColor()
+      picker?.doneButton?.tintColor = uiDataSource.getButtonsColor()
+      picker?.cancelButton?.tintColor = uiDataSource.getButtonsColor()
       
       if let existingPlaceholder = dataSource.placeholderKeyForDropDown(self) {
         updatePlaceholderWithValue(existingPlaceholder)
@@ -126,18 +124,18 @@ open class DropDown: OwnView {
     titleTextField.attributedPlaceholder = NSAttributedString(
         string: value,
         attributes: [
-            NSForegroundColorAttributeName: self.uiDataSource.getPlaceholderColor(),
-            NSFontAttributeName: UIFont(name: self.uiDataSource.getFontName(), size: self.uiDataSource.getFontSize())!
+            NSAttributedString.Key.foregroundColor: self.uiDataSource.getPlaceholderColor(),
+            NSAttributedString.Key.font: UIFont(name: self.uiDataSource.getFontName(), size: self.uiDataSource.getFontSize())!
         ]
     )
   }
 
   func updateSelectedIndex(_ newIndex: Int) {
     selectedIndex = newIndex
-    picker.pickerView.selectRow(selectedIndex, inComponent: 0, animated: true)
-    if let data: [String] = picker.pickerData as? [String] {
+    picker?.pickerView.selectRow(selectedIndex, inComponent: 0, animated: true)
+    if let data: [String] = picker?.data as? [String] {
       pickerSelector(picker, selectedValue: data[selectedIndex], index: selectedIndex)
-      picker.pickerView(picker.pickerView, didSelectRow: selectedIndex, inComponent: 0)
+        picker!.pickerView.delegate?.pickerView?(picker!.pickerView, didSelectRow: selectedIndex, inComponent: 0)
     }
   }
 
@@ -155,7 +153,7 @@ open class DropDown: OwnView {
         offset = 1
       }
 
-      picker.pickerData = values
+      picker?.data = values
       if let dataSourceSelectedIndex: Int = itsDataSource.selectedIndexForDropDown(self) {
         updateSelectedIndex(dataSourceSelectedIndex + offset)
       }
@@ -167,15 +165,15 @@ open class DropDown: OwnView {
       if let textField = currentTextField {
         textField.resignFirstResponder()
       }
-      picker.showPickerOver(itsDataSource.controllerForDropDownDisplaying(self))
+        picker?.present(into: itsDataSource.controllerForDropDownDisplaying(self))
     }
   }
 
-  func mainButtonTouched(_ sender: AnyObject) {
+  @objc func mainButtonTouched(_ sender: AnyObject) {
     presentDropDown()
   }
 
-  func textFieldBecameFirstResponder(_ notification: Notification) {
+  @objc func textFieldBecameFirstResponder(_ notification: Notification) {
     if let textField: TextInput = notification.object as? TextInput {
       if textField != titleTextField {
         currentTextField = textField
@@ -186,8 +184,8 @@ open class DropDown: OwnView {
   }
 }
 
-extension DropDown: SBPickerSelectorDelegate {
-  public func pickerSelector(_ selector: SBPickerSelector!, selectedValue value: String!, index idx: Int) {
+extension DropDown /*: SBPickerSelectorDelegate */{
+  public func pickerSelector(_ selector: SBPickerSwiftSelector!, selectedValue value: String!, index idx: Int) {
     let required = (nil != dataSource && !dataSource.isRequired(self))
     var offset = 0
     if (required && 0 != idx) || !required {
@@ -212,8 +210,8 @@ extension DropDown: SBPickerSelectorDelegate {
     }
   }
 
-  public func pickerSelector(_ selector: SBPickerSelector!, dateSelected date: Date!) {
-    if .date == picker.pickerType {
+  public func pickerSelector(_ selector: SBPickerSwiftSelector!, dateSelected date: Date!) {
+    if SBPickerSwiftSelector.Mode.dateDefault == picker?.pickerMode {
       if let _ = date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = self.dateFormat

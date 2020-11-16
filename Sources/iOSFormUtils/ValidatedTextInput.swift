@@ -67,7 +67,7 @@ extension TextInput: ValidatedTextInput {
     if let _ = validationDataSource {
       switch validationDataSource.validationTypeForInput(self) {
       case .NotBlank :
-        if (0 < self.text!.characters.count) {
+        if (0 < self.text!.count) {
           return true
         }
       case .Email :

@@ -5,6 +5,7 @@
 //  Created by Nicolas LELOUP on 18/09/2015.
 //  Copyright © 2015 Nicolas LELOUP - Buzznative. All rights reserved.
 //
+import UIKit
 
 // MARK: Constants
 let tfBecameFirstResponderNotifName = "textFieldBecameFirstResponder"
@@ -105,7 +106,7 @@ extension TextInput: UITextFieldDelegate {
 
   public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     if let _ = limit, "" != string {
-      return textField.text!.characters.count < limit
+      return textField.text!.count < limit
     }
 
     return true
